@@ -38,7 +38,7 @@ namespace CompanyManager.Domain.Models
             ArgumentNullException.ThrowIfNull(division);
             if (_divisions.Contains(division))
             {
-                throw new ArgumentException($"Department {division.Name} already exists.");
+                throw new InvalidOperationException();
             }
             _divisions.Add(division);
         }
