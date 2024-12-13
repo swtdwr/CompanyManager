@@ -8,10 +8,14 @@ namespace CompanyManager.Domain.Models
         private readonly List<Department> _departments;
         private string _name;
 
-        public Company(string name, IEnumerable<Department> departments)
+        public Company(Guid id, string name, IEnumerable<Department> departments) : base(id)
         {
             Name = name;
             _departments = [..departments];
+        }
+        
+        public Company(string name, IEnumerable<Department> departments) : this(Guid.Empty, name, departments)
+        {
         }
 
         /// <summary>

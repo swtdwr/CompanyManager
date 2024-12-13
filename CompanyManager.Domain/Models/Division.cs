@@ -6,9 +6,13 @@ namespace CompanyManager.Domain.Models
     {
         private string _name;
     
-        public Division(string name)
+        public Division(Guid id, string name) : base(id)
         {
             Name = name;
+        }
+        
+        public Division(string name) : this(Guid.Empty, name)
+        {
         }
 
         /// <summary>

@@ -1,0 +1,21 @@
+﻿services:
+  company-manager.client:
+    image: company-manager.client
+    container_name: company-manager.client
+    build:
+      context: .
+      dockerfile: CompanyManager.Client/Dockerfile
+    ports:
+      - 8080:8080
+      - 8081:8081
+  company-manager.database:
+    image: postgres:latest
+    container_name: company-manager.database
+    environment:
+      - POSTGRES_DB=companies
+      - POSTGRES_USER=company-manager
+      - POSTGRES_PASSWORD=3lo2MjfwbM1jVEa
+    volumes:
+      - ./.containers/companies-database:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
