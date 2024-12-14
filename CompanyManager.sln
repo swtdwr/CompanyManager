@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompanyManager.Infrastructure", "CompanyManager.Infrastructure\CompanyManager.Infrastructure.csproj", "{87DCBBED-44FA-4D70-B87B-C54C967BEE83}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompanyManager.Client", "CompanyManager.Client\CompanyManager.Client.csproj", "{1D2AB3CF-087C-4178-9099-4EDD0563F7DB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompanyManager.UI", "CompanyManager.UI\CompanyManager.UI.csproj", "{1D2AB3CF-087C-4178-9099-4EDD0563F7DB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompanyManager.Domain", "CompanyManager.Domain\CompanyManager.Domain.csproj", "{EB839B45-7462-4222-BDDC-A7AB5B3FBBB5}"
 EndProject
