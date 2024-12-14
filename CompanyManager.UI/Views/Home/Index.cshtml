@@ -23,10 +23,11 @@
 
         <ul class="list-group">
             @{
-                var departmentIndex = 1;
+                var departmentIndex = 0;
             }
             @foreach (var department in company.Departments)
             {
+                departmentIndex++;
                 <li class="list-group-item">
                     <input type="hidden" name="departmentId" value="@department.Id"/>
 
@@ -52,10 +53,11 @@
                     </div>
                     <ul class="list-group mt-2">
                         @{
-                            var divisionIndex = 1;
+                            var divisionIndex = 0;
                         }
                         @foreach (var division in department.Divisions)
                         {
+                            divisionIndex++;
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 <input type="hidden" name="divisionId" value="@division.Id"/>
                                 @divisionIndex. @division.Name
