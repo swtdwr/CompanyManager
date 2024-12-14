@@ -1,6 +1,6 @@
 ﻿namespace CompanyManager.Infrastructure.EntityFramework.DTOs
 {
-    public class DivisionDto
+    internal class DivisionDto
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

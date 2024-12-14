@@ -5,12 +5,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CompanyManager.Infrastructure.EntityFramework.Repositories
 {
-    public sealed class EfCompaniesRepository(CompaniesDbContext context) : ICompaniesRepository
+    internal sealed class EfCompaniesRepository(CompaniesDbContext context) : ICompaniesRepository
     {
         public async Task AddAsync(Company company, CancellationToken cancellationToken = default)
         {
             ArgumentNullException.ThrowIfNull(company);
             await context.Companies.AddAsync(company.MapToDto(), cancellationToken);
+            await context.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task AddManyAsync(IEnumerable<Company> companies, CancellationToken cancellationToken = default)
+        {
+            var dtos = companies.Select(c => c.MapToDto());
+            await context.Companies.AddRangeAsync(dtos, cancellationToken);
             await context.SaveChangesAsync(cancellationToken);
         }
 

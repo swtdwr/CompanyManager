@@ -1,18 +1,18 @@
 ﻿using CompanyManager.Infrastructure.EntityFramework.DTOs;
 using Microsoft.EntityFrameworkCore;
 
-namespace CompanyManager.Infrastructure.EntityFramework.Repositories
+namespace CompanyManager.Infrastructure.EntityFramework
 {
-    public class CompaniesDbContext : DbContext
+    internal class CompaniesDbContext : DbContext
     {
         public CompaniesDbContext(DbContextOptions<CompaniesDbContext> options) : base(options)
         {
         }
         
-        public DbSet<CompanyDto> Companies { get; set; }
+        public DbSet<CompanyDto> Companies { get; init; }
         
-        public DbSet<DepartmentDto> Departments { get; set; }
+        public DbSet<DepartmentDto> Departments { get; init; }
         
-        public DbSet<DivisionDto> Divisions { get; set; }
+        public DbSet<DivisionDto> Divisions { get; init; }
     }
 }

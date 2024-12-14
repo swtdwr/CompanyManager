@@ -3,7 +3,7 @@ using CompanyManager.Infrastructure.EntityFramework.DTOs;
 
 namespace CompanyManager.Infrastructure.EntityFramework.Extensions
 {
-    public static class MappingExtensions
+    internal static class MappingExtensions
     {
         public static Company MapToEntity(this CompanyDto dto)
         {
