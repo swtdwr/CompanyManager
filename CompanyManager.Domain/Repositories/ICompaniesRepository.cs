@@ -10,6 +10,14 @@ namespace CompanyManager.Domain.Repositories
         /// <param name="company">Компания, которую необходимо добавить.</param>
         /// <param name="cancellationToken">Токен отмены для асинхронной операции.</param>
         Task AddAsync(Company company, CancellationToken cancellationToken = default);
+        
+        
+        /// <summary>
+        /// Добавляет набор компаний.
+        /// </summary>
+        /// <param name="companies">Коллекция компаний, которую необходимо добавить.</param>
+        /// <param name="cancellationToken">Токен отмены для асинхронной операции.</param>
+        Task AddManyAsync(IEnumerable<Company> companies, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Обновляет существующую компанию.

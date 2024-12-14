@@ -1,6 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Text;
+using System.Xml.Serialization;
+using Microsoft.AspNetCore.Mvc;
 using CompanyManager.Domain.Models;
 using CompanyManager.Domain.Repositories;
+using CompanyManager.Infrastructure.Services.CompaniesSerializer;
+using CompanyManager.Infrastructure.Services.CompaniesSerializer.Abstractions;
 using CompanyManager.UI.Models;
 using CompanyManager.UI.Extensions;
 
@@ -10,6 +14,7 @@ namespace CompanyManager.UI.Controllers
     [Route("api/companies")]
     public sealed class CompaniesApiController(
         ICompaniesRepository companiesRepository,
+        [FromKeyedServices(SerializationType.Xml)] ICompaniesSerializer companiesSerializer,
         ILogger<CompaniesApiController> logger) : ControllerBase
     {
         [HttpPost]
@@ -87,16 +92,43 @@ namespace CompanyManager.UI.Controllers
             }
         }
 
-        [HttpGet("{companyId:guid}/xml")]
-        public Task<ActionResult> ExportToXml()
+        [HttpGet("xml")]
+        public async Task<ActionResult> ExportToXmlAsync(CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var companies = new List<Company>();
+                await foreach (var company in companiesRepository.GetAllAsync(cancellationToken))
+                {
+                    companies.Add(company);
+                }
+                
+                var serializedCompanies = await companiesSerializer.SerializeAsync(companies, cancellationToken);
+                return File(serializedCompanies, "application/xml", "companies.xml");
+            }
+            catch (Exception e)
+            {
+                logger.LogError(e, "Возникла ошибка при экспорте компаний");
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
-
-        [HttpPost("{companyId:guid}/xml")]
-        public Task<ActionResult> ImportFromXml()
+        
+        [HttpPost("xml")]
+        public async Task<ActionResult> ImportFromXmlAsync(IFormFile file, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var fileContent = await file.ReadContentAsBytesAsync(cancellationToken);
+                var companies = await companiesSerializer.DeserializeAsync(fileContent, cancellationToken);
+                await companiesRepository.AddManyAsync(companies, cancellationToken);
+                
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                logger.LogError(e, "Возникла ошибка при импорте компаний");
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
     }
 }
